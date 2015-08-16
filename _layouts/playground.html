@@ -1,0 +1,24 @@
+---
+layout: default
+---
+<div class="post">
+
+	<header class="post-header">
+		<h1 class="post-title">{{ page.title }}</h1>
+	</header>
+
+	<article class="post-content">
+		{{ content }}
+
+		{% if page.address %}
+		<div class="playground-map">
+			<a href="http://maps.google.ca/maps?f=d&amp;daddr=49.256960,-123.106743&amp;z=15">
+				<img src="http://maps.googleapis.com/maps/api/staticmap?center={{ page.address }},Vancouver,BC&markers={{ page.address }}&zoom=13&scale=2&size=740x200&maptype=roadmap" alt="Map of {{ page.title }}">
+			</a>
+		</div>
+		{% endif %}
+
+		<a href="{{ page.detailsUrl }}">More details</a>
+	</article>
+
+</div>

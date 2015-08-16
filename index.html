@@ -1,0 +1,19 @@
+---
+layout: default
+---
+
+<div class="home">
+
+  <h1 class="page-heading">Playgrounds</h1>
+
+  <ul class="post-list">
+    {% for playground in site.data.playground %}
+      <li>
+        <a class="post-link" href="{{ playground.name | datapage_url: 'playgrounds' }}">{{ playground.name }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <p>Coming soon: <a href="http://vancouver.ca/parks-recreation-culture/playgrounds.aspx">more playgrounds</a></p>
+
+</div>
