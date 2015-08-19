@@ -3,8 +3,7 @@ layout: default
 ---
 
 <script type="text/javascript">
-    var names = {{ site.data.playground | map: 'name' | jsonify }};
-    var latlngs = {{ site.data.playground | map: 'latlng' | jsonify }};
+    var data = {{ site.data.playground | jsonify }};
 
     var map;
     function initMap() {
@@ -13,21 +12,23 @@ layout: default
         var bounds = new google.maps.LatLngBounds();
         var infowindow = new google.maps.InfoWindow();
 
-        var marker, i, coords;
-        for (i = 0; i < latlngs.length; i++) {
-            // TODO: remove this check
-            if (latlngs[i]) {
-                coords = latlngs[i].split(',');
+        // TODO: marker.setMap(null); to remove markers depending on query
+
+        var marker, i;
+        for (i = 0; i < data.length; i++) {
+            // TODO: remove this check once all latlng in place
+            if (data[i].lat) {
                 marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(coords[0], coords[1]),
+                    position: new google.maps.LatLng(data[i].lat, data[i].lng),
                     map: map
                 });
                 bounds.extend(marker.position);
             }
 
+            var detailsUrl = '/playgrounds/'; // TODO
             google.maps.event.addListener(marker, 'click', (function(marker, i) {
                 return function() {
-                    infowindow.setContent(names[i]);
+                    infowindow.setContent(data[i].name + '<br><a href="' + detailsUrl + '">More details &raquo;</a>');
                     infowindow.open(map, marker);
                 }
             })(marker, i));
